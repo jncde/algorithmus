@@ -3,6 +3,7 @@ import org.junit.Test;
 
 import datastruct.ArrayStack;
 import datastruct.ListStack;
+import datastruct.ResizeArrayStack;
 import datastruct.Stack;
 
 public class StackUT {
@@ -12,7 +13,7 @@ public class StackUT {
   public void ArrayStack(){
 
     ArrayStack<Integer> stack = new ArrayStack<Integer> (5);
-    testStack (stack);
+    testStack (stack, 5);
 
   }
 
@@ -20,24 +21,33 @@ public class StackUT {
   public void ListStack(){
 
     Stack<Integer> stack = new ListStack<Integer> ();
-    testStack (stack);
+    testStack (stack, 10);
 
   }
 
-  private void testStack (Stack<Integer> stack) {
-    Assert.assertTrue (stack.isEmpty ());
-    stack.push (5);
-    stack.push (4);
-    stack.push (3);
-    stack.push (2);
-    stack.push (1);
+  @Test
+  public void ResizeArrayStack () {
 
-    Assert.assertEquals (new Integer (1),stack.pop ());
-    Assert.assertEquals (new Integer (2),stack.pop ());
-    Assert.assertEquals (new Integer (3),stack.pop ());
-    Assert.assertEquals (new Integer (4),stack.pop ());
-    Assert.assertEquals (new Integer (5),stack.pop ());
-    Assert.assertNull (stack.pop ());
+    Stack<Integer> stack = new ResizeArrayStack<Integer> (5);
+    testStack (stack, 10);
+
+  }
+
+  private void testStack (Stack<Integer> stack,
+                          int size) {
+    Assert.assertTrue (stack.isEmpty ());
+
+    for (int i = 0; i < size; i++) {
+      stack.push (i);
+      System.out.println (String.format ("%s push %s to stack", stack.getClass ().getSimpleName (), i));
+    }
+
+    for (int i = 0; i < size; i++) {
+      int stackLast = size - 1 - i;
+      Assert.assertEquals (new Integer (stackLast), stack.pop ());
+      System.out.println (String.format ("%s pop %s from stack", stack.getClass ().getSimpleName (), stackLast));
+    }
+
   }
 
 }
