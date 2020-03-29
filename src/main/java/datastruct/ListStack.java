@@ -10,26 +10,19 @@ public class ListStack<T> implements Stack<T> {
 
   public T pop () {
 
-    if(last!=null){
-      Node lastTemp=last;
+    if (!isEmpty ()) {
+      T item = last.t;
       last=last.next;
-      return lastTemp.t;
+      return item;
     }
 
     return null;
   }
 
   public boolean push (T item) {
-
-    Node newNode = new Node (null,item);
-
-    if(last == null){
-      last =newNode;
-    }else{
-      Node old= last;
-      last =newNode;
-      last.next=old;
-    }
+    Node old = last;
+    last = new Node (null, item);
+    last.next = old;
     return true;
   }
 
@@ -38,8 +31,9 @@ public class ListStack<T> implements Stack<T> {
   }
 
   private class Node{
-    public Node next;
-    public T t;
+
+    Node next;
+    T    t;
 
     public Node (Node next, T t) {
       this.next = next;

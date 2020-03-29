@@ -5,26 +5,27 @@ import java.util.Arrays;
 public class ResizeArrayStack<T> implements Stack<T> {
 
   T[] stack;
-  int last;
+  private int N = 0;
 
   public ResizeArrayStack (int length) {
     stack = (T[]) new Object[length];
-    last = -1;
   }
 
   public T pop () {
 
     if (!isEmpty ()) {
       shrinkStack ();
-      return stack[last--];
+      T pop = stack[--N];
+      stack[N] = null;
+      return pop;
     }
     return null;
   }
 
   private void shrinkStack () {
-    if (last == stack.length / 4) {
+    if (N == stack.length / 4) {
       T[] newStack = (T[]) new Object[stack.length / 2];
-      for (int i = 0; i <= last; i++) {
+      for (int i = 0; i < N; i++) {
         newStack[i] = stack[i];
       }
       System.out.println (String.format ("stack-size is decreased from %d to %d", stack.length, stack.length / 2));
@@ -35,10 +36,10 @@ public class ResizeArrayStack<T> implements Stack<T> {
   }
 
   public boolean push (T item) {
-    if (last == stack.length - 1) {
+    if (N == stack.length) {
       increaseStackSize ();
     }
-    stack[++last] = item;
+    stack[N++] = item;
     return true;
   }
 
@@ -56,11 +57,11 @@ public class ResizeArrayStack<T> implements Stack<T> {
   }
 
   public boolean isEmpty () {
-    return last == -1;
+    return N == 0;
   }
 
   @Override
   public String toString () {
-    return "ResizeArrayStack{" + "stack=" + Arrays.toString (stack) + ", last=" + last + '}';
+    return "ResizeArrayStack{" + "stack=" + Arrays.toString (stack) + ", N=" + N + '}';
   }
 }
