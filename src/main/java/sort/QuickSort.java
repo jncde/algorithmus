@@ -18,20 +18,28 @@ public class QuickSort<T> {
 
   }
 
+  /**
+   * eli
+   */
+  // TODO
+  public void threeWayQuerySort () {
+
+  }
+
   private int partition (Comparable<T>[] a, int lo, int hi) {
 
     int i = lo;
     int j = hi + 1;
 
-    Comparable<T> kv = a[i];
+    Comparable<T> partitionV = a[i];
 
     while (true) {
 
-      while (less (a[++i], kv))
+      while (less (a[++i], partitionV))
         if (i == hi)
           break;
 
-      while (less (kv, a[--j]))
+      while (less (partitionV, a[--j]))
         if (j == lo)
           break;
 
@@ -39,7 +47,7 @@ public class QuickSort<T> {
         break;
 
       echange (a, i, j);
-      printRow (a, i, j, kv);
+      printRow (a, i, j, partitionV);
     }
 
     echange (a, lo, j);

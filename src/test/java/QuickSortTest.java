@@ -1,3 +1,5 @@
+import java.util.stream.Stream;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -77,11 +79,7 @@ public class QuickSortTest {
   }
 
   private Integer[] createIndexArray (int length) {
-    Integer[] index = new Integer[length];
-    for (int i = 0; i < index.length; i++) {
-      index[i] = i;
-    }
-    return index;
+    return Stream.iterate (0, i -> i + 1).limit (length).toArray (Integer[]::new);
   }
 
 }
